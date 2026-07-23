@@ -1,0 +1,6 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AltairOps.Torbox.Api/AltairOps.Torbox.Api.csproj" />
+    <Project Path="src/AltairOps.Torbox.Models/AltairOps.Torbox.Models.csproj" />
+  </Folder>
+</Solution>
