@@ -3,4 +3,7 @@
     <Project Path="src/AltairOps.Torbox.Api/AltairOps.Torbox.Api.csproj" />
     <Project Path="src/AltairOps.Torbox.Models/AltairOps.Torbox.Models.csproj" />
   </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AltairOps.TorBox.Tests/AltairOps.TorBox.Tests.csproj" />
+  </Folder>
 </Solution>

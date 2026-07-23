@@ -1,4 +1,5 @@
-using AltairOps.Torbox.Models.Services;
+using AltairOps.Torbox.Models;
+using AltairOps.Torbox.Models.Client;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
-builder.Services.AddHttpClient<TorboxService>();
+
+builder.Services.AddScoped<TorBoxConfiguration>();
+builder.Services.AddHttpClient<TorBoxClient>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

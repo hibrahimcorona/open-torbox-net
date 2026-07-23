@@ -456,3 +456,4 @@ $RECYCLE.BIN/
 ### User-specific files
 *appsettings.*.json
 src/AltairOps.Torbox.Api/appsettings.json
+src/AltairOps.Torbox.Models/secrets.json

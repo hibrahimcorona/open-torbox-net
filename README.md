@@ -1,8 +1,8 @@
-# Open Torbox .NET
-**This is a WIP** for a future self-host communication with the Torbox API.
+# Open TorBox .NET
+**This is a WIP** for a future self-host communication with the TorBox API.
 
 # How to use
 
 ### References and useful links
-- [Torbox Official API documentation](https://api-docs.torbox.app/)
-- [Torbox webpage](https://torbox.app)
+- [TorBox Official API documentation](https://api-docs.TorBox.app/)
+- [TorBox webpage](https://TorBox.app)
