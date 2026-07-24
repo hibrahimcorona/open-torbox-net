@@ -1,6 +1,7 @@
 using System.Text.Json.Serialization;
 
 namespace AltairOps.Torbox.Models.Requests.Torrents;
+
 /// <summary>
 /// Represents the request for torrent's creation.
 /// </summary>
@@ -26,4 +27,7 @@ public class TorrentAddRequest
 
     [JsonPropertyName("add_only_if_cached")]
     public bool? AddOnlyIfCached { get; set; }
+
+    [JsonIgnore]
+    public bool AddAsync { get; set; } = false;
 }
