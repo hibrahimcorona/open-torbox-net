@@ -9,7 +9,7 @@ namespace AltairOps.Torbox.Models.Requests.Torrents;
 public class TorrentRequestDownloadRequest
 {
     [JsonPropertyName("torrent_id")]
-    public string? TorrentId { get; set; }
+    public long? TorrentId { get; set; }
 
     [JsonPropertyName("file_id")]
     public string? FileId { get; set; }

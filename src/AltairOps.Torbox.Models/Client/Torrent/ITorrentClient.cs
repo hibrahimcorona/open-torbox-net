@@ -32,4 +32,16 @@ public interface ITorrentClient
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	public Task<TorBoxResponse<string?>> GetDownloadLink(TorrentRequestDownloadRequest request, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// Operation for control torrent. <br/>
+	/// There are 3 types of operations: <br/>
+	/// Reannounce reannounces the torrent to get new peers.
+	/// Delete deletes the torrent from the client and your account permanently
+	/// Resume resumes a paused torrent
+	/// </summary>
+	/// <param name="request"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	public Task<TorBoxResponse<ControlTorrentResponse?>> ControlTorrent (TorrentControlRequest request, CancellationToken cancellationToken = default);
 }
