@@ -1,4 +1,5 @@
-﻿using AltairOps.Torbox.Models.Client.Torrent;
+﻿using System.Net.Http.Headers;
+using AltairOps.Torbox.Models.Client.Torrent;
 
 namespace AltairOps.Torbox.Models.Client;
 
@@ -22,12 +23,13 @@ public class TorBoxClient
 	/// </summary>
 	public ITorrentClient TorrentClient { get; }
 
-	public TorBoxClient(HttpClient torBoxHttpClient = null)
+	public TorBoxClient(HttpClient torBoxHttpClient, TorBoxConfiguration config)
 	{
-		_config = new TorBoxConfiguration(Setup.LoadSecrets());
+		_config = config;
 		_torBoxHttpClient = torBoxHttpClient;
 
-		//_torBoxHttpClient.BaseAddress = new Uri(_config.BaseUrl);
-		TorrentClient = new TorrentClient(_torBoxHttpClient, _config);
+		_torBoxHttpClient.BaseAddress = new Uri(_config.BaseUrl);
+		_torBoxHttpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _config.BearerToken);
+		TorrentClient = new TorrentClient(_torBoxHttpClient, config);
 	}
 }

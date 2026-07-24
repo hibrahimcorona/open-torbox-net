@@ -1,166 +1,163 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
 namespace AltairOps.Torbox.Models.Responses.Torrents;
 
 public class TorrentListResponse
 {
 	[JsonPropertyName("id")]
-	public int Id { get; set; }
+	public int? Id { get; set; }
 
 	[JsonPropertyName("auth_id")]
-	public string AuthId { get; set; }
+	public string? AuthId { get; set; }
 
 	[JsonPropertyName("server")]
-	public int Server { get; set; }
+	public int? Server { get; set; }
 
 	[JsonPropertyName("hash")]
-	public string Hash { get; set; }
+	public string? Hash { get; set; }
 
 	[JsonPropertyName("name")]
-	public string Name { get; set; }
+	public string? Name { get; set; }
 
 	[JsonPropertyName("magnet")]
-	public string Magnet { get; set; }
+	public string? Magnet { get; set; }
 
 	[JsonPropertyName("size")]
-	public int Size { get; set; }
+	public long? Size { get; set; }
 
 	[JsonPropertyName("active")]
-	public bool Active { get; set; }
+	public bool? Active { get; set; }
 
 	[JsonPropertyName("created_at")]
-	public DateTime Created_at { get; set; }
+	public DateTime? CreatedAt { get; set; }
 
 	[JsonPropertyName("updated_at")]
-	public DateTime Updated_at { get; set; }
+	public DateTime? UpdatedAt { get; set; }
 
 	[JsonPropertyName("download_state")]
-	public string DownloadState { get; set; }
+	public string? DownloadState { get; set; }
 
 	[JsonPropertyName("seeds")]
-	public int Seeds { get; set; }
+	public int? Seeds { get; set; }
 
 	[JsonPropertyName("peers")]
-	public int Peers { get; set; }
+	public int? Peers { get; set; }
 
 	[JsonPropertyName("ratio")]
-	public int Ratio { get; set; }
+	public int? Ratio { get; set; }
 
 	[JsonPropertyName("progress")]
-	public int Progress { get; set; }
+	public int? Progress { get; set; }
 
 	[JsonPropertyName("download_speed")]
-	public int DownloadSpeed { get; set; }
+	public int? DownloadSpeed { get; set; }
 
 	[JsonPropertyName("upload_speed")]
-	public int UploadSpeed { get; set; }
+	public int? UploadSpeed { get; set; }
 
 	[JsonPropertyName("eta")]
-	public int Eta { get; set; }
+	public int? Eta { get; set; }
 
 	[JsonPropertyName("torrent_file")]
-	public bool Torrent_file { get; set; }
+	public bool? TorrentFile { get; set; }
 
 	[JsonPropertyName("expires_at")]
-	public DateTime Expires_at { get; set; }
+	public DateTime? ExpiresAt { get; set; }
 
 	[JsonPropertyName("download_present")]
-	public bool DownloadPresent { get; set; }
+	public bool? DownloadPresent { get; set; }
 
 	[JsonPropertyName("files")]
-	public TorrentFile[] Files { get; set; }
+	public TorrentFile[]? Files { get; set; }
 
 	[JsonPropertyName("download_path")]
-	public string DownloadPath { get; set; }
+	public string? DownloadPath { get; set; }
 
 	[JsonPropertyName("availability")]
-	public int Availability { get; set; }
+	public int? Availability { get; set; }
 
 	[JsonPropertyName("download_finished")]
-	public bool DownloadFinished { get; set; }
+	public bool? DownloadFinished { get; set; }
 
 	[JsonPropertyName("tracker")]
-	public string Tracker { get; set; }
+	public string? Tracker { get; set; }
 
 	[JsonPropertyName("total_uploaded")]
-	public int TotalIploaded { get; set; }
+	public int? TotalIploaded { get; set; }
 
 	[JsonPropertyName("total_downloaded")]
-	public int TotalDownloaded { get; set; }
+	public int? TotalDownloaded { get; set; }
 
 	[JsonPropertyName("cached")]
-	public bool Cached { get; set; }
+	public bool? Cached { get; set; }
 
 	[JsonPropertyName("owner")]
-	public string Owner { get; set; }
+	public string? Owner { get; set; }
 
 	[JsonPropertyName("seed_torrent")]
-	public bool SeedTorrent { get; set; }
+	public bool? SeedTorrent { get; set; }
 
 	[JsonPropertyName("allow_zipped")]
-	public bool AllowZipped { get; set; }
+	public bool? AllowZipped { get; set; }
 
 	[JsonPropertyName("long_term_seeding")]
-	public bool LongTermSeeding { get; set; }
+	public bool? LongTermSeeding { get; set; }
 
 	[JsonPropertyName("tracker_message")]
-	public string TrackerMessage { get; set; }
+	public string? TrackerMessage { get; set; }
 
 	[JsonPropertyName("cached_at")]
-	public DateTime CachedAt { get; set; }
+	public DateTime? CachedAt { get; set; }
 
 	[JsonPropertyName("private")]
-	public bool Private { get; set; }
+	public bool? Private { get; set; }
 
 	[JsonPropertyName("alternative_hashes")]
-	public string[] AlternativeHashes { get; set; }
+	public string[]? AlternativeHashes { get; set; }
 
 	[JsonPropertyName("tags")]
-	public string[] Tags { get; set; }
+	public string[]? Tags { get; set; }
 
 	[JsonPropertyName("air_locked")]
-	public bool AirLocked { get; set; }
+	public bool? AirLocked { get; set; }
 }
 
 public class TorrentFile
 {
 	[JsonPropertyName("id")]
-	public int Id { get; set; }
+	public int? Id { get; set; }
 
 	[JsonPropertyName("md5")]
-	public string Md5 { get; set; }
+	public string? Md5 { get; set; }
 
 	[JsonPropertyName("hash")]
-	public string Hash { get; set; }
+	public string? Hash { get; set; }
 
 	[JsonPropertyName("name")]
-	public string Name { get; set; }
+	public string? Name { get; set; }
 
 	[JsonPropertyName("size")]
-	public int Size { get; set; }
+	public long? Size { get; set; }
 
 	[JsonPropertyName("zipped")]
-	public bool Zipped { get; set; }
+	public bool? Zipped { get; set; }
 
 	[JsonPropertyName("s3_path")]
-	public string S3Path { get; set; }
+	public string? S3Path { get; set; }
 
 	[JsonPropertyName("infected")]
-	public bool Infected { get; set; }
+	public bool? Infected { get; set; }
 
 	[JsonPropertyName("mimetype")]
-	public string Mimetype { get; set; }
+	public string? Mimetype { get; set; }
 
 	[JsonPropertyName("short_name")]
-	public string ShortName { get; set; }
+	public string? ShortName { get; set; }
 
 	[JsonPropertyName("absolute_path")]
-	public string AbsolutePath { get; set; }
+	public string? AbsolutePath { get; set; }
 
 	[JsonPropertyName("opensubtitles_hash")]
-	public string OpensubtitlesHash { get; set; }
+	public string? OpenSubtitlesHash { get; set; }
 }
 

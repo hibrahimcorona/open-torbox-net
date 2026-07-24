@@ -3,6 +3,7 @@ using AltairOps.Torbox.Models.Responses.Torrents;
 using Microsoft.AspNetCore.Mvc;
 using AltairOps.Torbox.Models.Constants;
 using AltairOps.Torbox.Models.Requests;
+using AltairOps.Torbox.Models.Requests.Torrents;
 
 namespace AltairOps.Torbox.Api.Controllers
 {
@@ -20,8 +21,15 @@ namespace AltairOps.Torbox.Api.Controllers
 		[HttpGet("list")]
 		public async Task<IActionResult> ListTorrents([FromQuery] TorrentListRequest request)
 		{
-			var torrents = await _torBoxClient.TorrentClient.GetAsync(request);
-			return Ok(torrents);
+			var torrentList = await _torBoxClient.TorrentClient.ListTorrents(request);
+			return Ok(torrentList);
+		}
+
+		[HttpPost("add-torrent")]
+		public async Task<IActionResult> ListTorrents([FromQuery] TorrentAddRequest request)
+		{
+			var torrentCreation = await _torBoxClient.TorrentClient.AddTorrent(request);
+			return Ok(torrentCreation);
 		}
 	}
 }
