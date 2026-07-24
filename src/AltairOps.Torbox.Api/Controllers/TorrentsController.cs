@@ -1,8 +1,5 @@
 ﻿using AltairOps.Torbox.Models.Client;
-using AltairOps.Torbox.Models.Responses.Torrents;
 using Microsoft.AspNetCore.Mvc;
-using AltairOps.Torbox.Models.Constants;
-using AltairOps.Torbox.Models.Requests;
 using AltairOps.Torbox.Models.Requests.Torrents;
 
 namespace AltairOps.Torbox.Api.Controllers
@@ -19,24 +16,31 @@ namespace AltairOps.Torbox.Api.Controllers
 		}
 
 		[HttpGet("list")]
-		public async Task<IActionResult> ListTorrents([FromQuery] TorrentListRequest request)
+		public async Task<IActionResult> ListTorrents([FromQuery] TorrentListRequest request, CancellationToken cancellationToken = default)
 		{
-			var torrentList = await _torBoxClient.TorrentClient.ListTorrents(request);
+			var torrentList = await _torBoxClient.TorrentClient.ListTorrents(request, cancellationToken);
 			return Ok(torrentList);
 		}
 
 		[HttpPost("add-torrent")]
-		public async Task<IActionResult> ListTorrents([FromQuery] TorrentAddRequest request)
+		public async Task<IActionResult> ListTorrents([FromQuery] TorrentAddRequest request, CancellationToken cancellationToken = default)
 		{
-			var torrentCreation = await _torBoxClient.TorrentClient.AddTorrent(request);
+			var torrentCreation = await _torBoxClient.TorrentClient.AddTorrent(request, cancellationToken);
 			return Ok(torrentCreation);
 		}
 
 		[HttpGet("download-link")]
-		public async Task<IActionResult> DownloadLink([FromQuery] TorrentRequestDownloadRequest request)
+		public async Task<IActionResult> DownloadLink([FromQuery] TorrentRequestDownloadRequest request, CancellationToken cancellationToken = default)
 		{
-			var torrentDownloadLink = await _torBoxClient.TorrentClient.GetDownloadLink(request);
+			var torrentDownloadLink = await _torBoxClient.TorrentClient.GetDownloadLink(request, cancellationToken);
 			return Ok(torrentDownloadLink);
+		}
+
+		[HttpPost("control-torrent")]
+		public async Task<IActionResult> ControlTorrent([FromQuery] TorrentControlRequest request, CancellationToken cancellationToken = default)
+		{
+			var controlResponse = await _torBoxClient.TorrentClient.ControlTorrent(request, cancellationToken);
+			return Ok(controlResponse);
 		}
 	}
 }

@@ -97,7 +97,26 @@ public class TorrentClient : ITorrentClient
 
 		var buffer = await httpResponse.Content.ReadAsByteArrayAsync();
 		var text = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
-		System.Console.WriteLine(text);
+
 		return await httpResponse.Content.ReadFromJsonAsync<TorBoxResponse<string>>();
 	}
+
+    public async Task<TorBoxResponse<ControlTorrentResponse?>> ControlTorrent(TorrentControlRequest request, CancellationToken cancellationToken)
+    {
+        var dataContent = new MultipartFormDataContent();
+		dataContent.AddIfHasValue("torrent_id", request.TorrentId);
+		dataContent.AddIfHasValue("operation", request.ControlTorrentOperation);
+		dataContent.AddIfHasValue("all", request.All);
+
+		var httpResponse = await _httpClient.PostAsync($"{Endpoints.ControlTorrent}", dataContent);
+		if (httpResponse == null)
+		{
+			return null;
+		}
+
+		var buffer = await httpResponse.Content.ReadAsByteArrayAsync();
+		var text = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+		
+		return await httpResponse.Content.ReadFromJsonAsync<TorBoxResponse<ControlTorrentResponse?>>();
+    }
 }

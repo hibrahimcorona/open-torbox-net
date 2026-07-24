@@ -9,4 +9,6 @@ public class Endpoints
 	public static string AddTorrentAsync => "torrents/asynccreatetorrent";
 
 	public static string DownloadRequest => "torrents/requestdl";
+
+	public static string ControlTorrent = "torrents/controltorrent";
 }
