@@ -20,7 +20,7 @@ public class Setup
 
 	public static Secrets LoadSecrets(string path)
 	{
-		var fullPath = $"{path}/{_secretsFileName}";
+		var fullPath = Path.Combine(path, _secretsFileName);
 		if (!File.Exists(fullPath))
 		{
 			throw new FileNotFoundException($"The secrets file '{_secretsFileName}' was not found.");

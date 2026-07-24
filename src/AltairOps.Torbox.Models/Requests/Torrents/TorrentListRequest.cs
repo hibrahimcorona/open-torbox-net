@@ -11,8 +11,8 @@ public class TorrentListRequest
 	public int? Id { get; set; }
 
 	[FromQuery(Name = "offset")]
-	public int? Offset { get; set; } = 0;
+	public int Offset { get; set; } = 0;
 
 	[FromQuery(Name = "limit")]
-	public int? Limit { get; set; } = 10;
+	public int Limit { get; set; } = 10;
 }

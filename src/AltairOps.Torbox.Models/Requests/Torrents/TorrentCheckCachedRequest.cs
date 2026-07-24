@@ -2,7 +2,7 @@
 
 namespace AltairOps.Torbox.Models.Requests.Torrents;
 
-internal class TorrentCheckCachedRequest
+public class TorrentCheckCachedRequest
 {
 	[JsonPropertyName("hash")]
 	public string? Hash { get; set; }
