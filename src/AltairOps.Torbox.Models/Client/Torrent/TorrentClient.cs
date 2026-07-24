@@ -116,11 +116,11 @@ public class TorrentClient : ITorrentClient
 	public async Task<TorBoxResponse<TorrentCheckCachedListResponse?>> GetCheckCached(TorrentCheckCachedRequest request, CancellationToken cancellationToken)
 	{
 		var parameters = new Dictionary<string, string>
-	{
-		{ "hash", MagnetParser.ExtractHash(request.Hash) ?? string.Empty },
-		{ "format", request.Format.ToString().ToLowerInvariant() },
-		{ "list_files", request.ListFiles.ToString().ToLowerInvariant() }
-	};
+		{
+			{ "hash", MagnetParser.ExtractHash(request.Hash) ?? string.Empty },
+			{ "format", request.Format.ToString().ToLowerInvariant() },
+			{ "list_files", request.ListFiles.ToString().ToLowerInvariant() }
+		};
 
 		var requestUri = QueryHelpers.AddQueryString(Endpoints.CheckCached, parameters);
 
@@ -135,7 +135,49 @@ public class TorrentClient : ITorrentClient
 			return await httpResponse.Content.ReadFromJsonAsync<TorBoxResponse<TorrentCheckCachedListResponse?>>(cancellationToken);
 		}
 
-		// Default / Object format: reshape the dictionary-keyed response into a flat list
+		var result = await httpResponse.Content
+			.ReadFromJsonAsync<TorBoxResponse<TorrentCheckCachedObjectResponse>>(cancellationToken);
+
+		if (result is null)
+		{
+			return null;
+		}
+
+		var responseList = new TorBoxResponse<TorrentCheckCachedListResponse>
+		{
+			Success = result.Success,
+			Error = result.Error,
+			Detail = result.Detail,
+			Data = new()
+		};
+
+		foreach (var item in result.Data)
+		{
+			responseList.Data.Add(new TorrentCheckCachedItem
+			{
+				Name = item.Value?.Name,
+				Size = item.Value?.Size,
+				Hash = item.Value?.Hash,
+				Files = item.Value?.Files
+			});
+		}
+
+		return responseList;
+	}
+
+	public async Task<TorBoxResponse<TorrentCheckCachedListResponse?>> GetCheckCachedByBatch(List<string> hashes, CancellationToken cancellationToken)
+	{
+		var payload = new Dictionary<string, object>
+		{
+			{ "hashes", hashes }
+		};
+
+		var httpResponse = await _httpClient.PostAsJsonAsync($"{Endpoints.CheckCachedByBatch}", payload);
+		var buffer = await httpResponse.Content.ReadAsByteArrayAsync();
+		var text = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+		Console.WriteLine(text);
+		httpResponse.EnsureSuccessStatusCode();
+
 		var result = await httpResponse.Content
 			.ReadFromJsonAsync<TorBoxResponse<TorrentCheckCachedObjectResponse>>(cancellationToken);
 

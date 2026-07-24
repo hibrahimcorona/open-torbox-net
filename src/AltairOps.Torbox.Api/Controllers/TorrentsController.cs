@@ -23,7 +23,7 @@ namespace AltairOps.Torbox.Api.Controllers
 		}
 
 		[HttpPost("add-torrent")]
-		public async Task<IActionResult> ListTorrents([FromQuery] TorrentAddRequest request, CancellationToken cancellationToken = default)
+		public async Task<IActionResult> AddTorrent([FromQuery] TorrentAddRequest request, CancellationToken cancellationToken = default)
 		{
 			var torrentCreation = await _torBoxClient.TorrentClient.PostAddTorrent(request, cancellationToken);
 			return Ok(torrentCreation);
@@ -47,6 +47,13 @@ namespace AltairOps.Torbox.Api.Controllers
 		public async Task<IActionResult> CheckCached([FromQuery] TorrentCheckCachedRequest request, CancellationToken cancellationToken = default)
 		{
 			var cachedResponse = await _torBoxClient.TorrentClient.GetCheckCached(request, cancellationToken);
+			return Ok(cachedResponse);
+		}
+
+		[HttpGet("check-cached-batch")]
+		public async Task<IActionResult> CheckCachedByBatch([FromQuery] List<string> request, CancellationToken cancellationToken = default)
+		{
+			var cachedResponse = await _torBoxClient.TorrentClient.GetCheckCachedByBatch(request, cancellationToken);
 			return Ok(cachedResponse);
 		}
 	}

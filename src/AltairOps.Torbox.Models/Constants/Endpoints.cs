@@ -13,4 +13,6 @@ public class Endpoints
 	public static string ControlTorrent = "torrents/controltorrent";
 
 	public static string CheckCached = "torrents/checkcached";
+
+	public static string CheckCachedByBatch = "torrents/checkcached";
 }
