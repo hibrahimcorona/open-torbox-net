@@ -66,7 +66,7 @@ public class TorrentClient : ITorrentClient
 		dataContent.AddIfHasValue("as_queued", request.AsQueued);
 		dataContent.AddIfHasValue("add_only_if_cached", request.AddOnlyIfCached);
 
-		var httpResponse = await _httpClient.PostAsync($"{Endpoints.AddTorrent}", dataContent);
+		var httpResponse = await _httpClient.PostAsync(request.AddAsync ? $"{Endpoints.AddTorrentAsync}" : $"{Endpoints.AddTorrent}", dataContent);
 		if (httpResponse == null)
 		{
 			return null;
@@ -76,5 +76,28 @@ public class TorrentClient : ITorrentClient
 		var text = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
 
 		return await httpResponse.Content.ReadFromJsonAsync<TorBoxResponse<TorrentAddResponse?>>();
+	}
+
+	public async Task<TorBoxResponse<string?>> GetDownloadLink(TorrentRequestDownloadRequest request, CancellationToken cancellationToken = default)
+	{
+		var parameters = HttpUtility.ParseQueryString(string.Empty);
+		parameters["token"] = _configuration.BearerToken;
+		parameters.AddIfHasValue("torrent_id", request.TorrentId);
+		parameters.AddIfHasValue("file_id", request.FileId);
+		parameters.AddIfHasValue("zip_link", request.ZipLink);
+		parameters.AddIfHasValue("user_ip", request.UserIp);
+		parameters.AddIfHasValue("redirect", request.Redirect);
+		parameters.AddIfHasValue("append_name", request.AppendName);
+
+		var httpResponse = await _httpClient.GetAsync($"{Endpoints.DownloadRequest}?{parameters}");
+		if (httpResponse == null)
+		{
+			return null;
+		}
+
+		var buffer = await httpResponse.Content.ReadAsByteArrayAsync();
+		var text = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+		System.Console.WriteLine(text);
+		return await httpResponse.Content.ReadFromJsonAsync<TorBoxResponse<string>>();
 	}
 }

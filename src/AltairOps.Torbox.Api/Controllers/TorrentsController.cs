@@ -31,5 +31,12 @@ namespace AltairOps.Torbox.Api.Controllers
 			var torrentCreation = await _torBoxClient.TorrentClient.AddTorrent(request);
 			return Ok(torrentCreation);
 		}
+
+		[HttpGet("download-link")]
+		public async Task<IActionResult> DownloadLink([FromQuery] TorrentRequestDownloadRequest request)
+		{
+			var torrentDownloadLink = await _torBoxClient.TorrentClient.GetDownloadLink(request);
+			return Ok(torrentDownloadLink);
+		}
 	}
 }

@@ -2,6 +2,9 @@
 
 namespace AltairOps.Torbox.Models.Responses;
 
+/// <summary>
+/// Base response from TorBox.
+/// </summary>
 public class TorBoxBaseResponse
 {
 	[JsonPropertyName("success")]
