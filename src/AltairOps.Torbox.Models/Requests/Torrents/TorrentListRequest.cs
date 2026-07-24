@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace AltairOps.Torbox.Models.Requests;
+namespace AltairOps.Torbox.Models.Requests.Torrents;
 
 public class TorrentListRequest
 {

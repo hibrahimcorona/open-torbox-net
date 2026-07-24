@@ -19,14 +19,15 @@ public class Setup
 		get { return _secretsFileName; }
 	}
 
-	public static Secrets LoadSecrets()
+	public static Secrets LoadSecrets(string path)
 	{
-		if (!File.Exists(_secretsFileName))
+		var fullPath =$"{path}/{_secretsFileName}";
+		if (!File.Exists(fullPath))
 		{
 			throw new FileNotFoundException($"The secrets file '{_secretsFileName}' was not found.");
 		}
 
-		var secretsContent = File.ReadAllText(_secretsFileName);
+		var secretsContent = File.ReadAllText(fullPath);
 		return JsonSerializer.Deserialize<Secrets>(secretsContent);
 	}
 }

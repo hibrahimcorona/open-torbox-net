@@ -29,7 +29,7 @@ public class TorBoxConfiguration
 				throw new InvalidOperationException("API key is not set. Please set the API key before making requests.");
 			}
 
-			return $"Bearer {ApiKey}";
+			return $"{ApiKey}";
 		}
 	}
 
@@ -41,6 +41,11 @@ public class TorBoxConfiguration
 
 	private void LoadConfiguration()
 	{
-		var secrets = _configuration["Secrets:Path"];
+		var secretsPath = _configuration["Secrets:Path"];
+		if (!String.IsNullOrWhiteSpace(secretsPath))
+		{
+			var secrets = Setup.LoadSecrets(secretsPath);
+			ApiKey = secrets.ApiKey;
+		}
 	}
 }
