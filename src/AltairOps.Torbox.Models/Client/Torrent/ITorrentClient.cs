@@ -47,10 +47,18 @@ public interface ITorrentClient
 	public Task<TorBoxResponse<ControlTorrentResponse?>> PostControlTorrent(TorrentControlRequest request, CancellationToken cancellationToken = default);
 
 	/// <summary>
-	/// Checks if a torrent is cached in TorBox. <br/>
+	/// Checks if a torrent is cached in TorBox.
 	/// </summary>
 	/// <param name="request"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
 	public Task<TorBoxResponse<TorrentCheckCachedListResponse?>> GetCheckCached(TorrentCheckCachedRequest request, CancellationToken cancellationToken);
+
+	/// <summary>
+	/// Batch checks if a torrent is cached in TorBox.
+	/// </summary>
+	/// <param name="request"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	public Task<TorBoxResponse<TorrentCheckCachedListResponse?>> GetCheckCachedByBatch(List<string> request, CancellationToken cancellationToken);
 }

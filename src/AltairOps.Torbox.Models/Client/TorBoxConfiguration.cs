@@ -32,6 +32,17 @@ public class TorBoxConfiguration
 		}
 	}
 
+	public TorBoxConfiguration(string secretsPath)
+	{
+		if (secretsPath is null)
+		{
+			return;
+		}
+
+		var secrets = Setup.LoadSecrets(secretsPath);
+		ApiKey = secrets.ApiKey;
+	}
+
 	public TorBoxConfiguration(IConfiguration configuration)
 	{
 		_configuration = configuration;
@@ -41,10 +52,12 @@ public class TorBoxConfiguration
 	private void LoadConfiguration()
 	{
 		var secretsPath = _configuration["Secrets:Path"];
-		if (!String.IsNullOrWhiteSpace(secretsPath))
+		if (string.IsNullOrWhiteSpace(secretsPath))
 		{
-			var secrets = Setup.LoadSecrets(secretsPath);
-			ApiKey = secrets.ApiKey;
+			return;
 		}
+
+		var secrets = Setup.LoadSecrets(secretsPath);
+		ApiKey = secrets.ApiKey;
 	}
 }
