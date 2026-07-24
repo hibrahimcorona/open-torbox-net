@@ -1,11 +1,15 @@
 ﻿using AltairOps.Torbox.Models.Constants;
+using AltairOps.Torbox.Models.Helpers;
 using AltairOps.Torbox.Models.Requests.Torrents;
 using AltairOps.Torbox.Models.Responses;
 using AltairOps.Torbox.Models.Responses.Torrents;
+using Microsoft.AspNetCore.WebUtilities;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
+using System.Text.Json;
 using System.Web;
+using System.Xml.Linq;
 
 namespace AltairOps.Torbox.Models.Client.Torrent;
 
@@ -43,10 +47,7 @@ public class TorrentClient : ITorrentClient
 		parameters["offset"] = request.Offset.ToString();
 
 		var httpResponse = await _httpClient.GetAsync($"{Endpoints.ListTorrents}?{parameters}");
-		if (httpResponse == null)
-		{
-			return null;
-		}
+		httpResponse.EnsureSuccessStatusCode();
 
 		var buffer = await httpResponse.Content.ReadAsByteArrayAsync();
 		var text = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
@@ -66,10 +67,7 @@ public class TorrentClient : ITorrentClient
 		dataContent.AddIfHasValue("add_only_if_cached", request.AddOnlyIfCached);
 
 		var httpResponse = await _httpClient.PostAsync(request.AddAsync ? $"{Endpoints.AddTorrentAsync}" : $"{Endpoints.AddTorrent}", dataContent);
-		if (httpResponse == null)
-		{
-			return null;
-		}
+		httpResponse.EnsureSuccessStatusCode();
 
 		var buffer = await httpResponse.Content.ReadAsByteArrayAsync();
 		var text = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
@@ -89,10 +87,7 @@ public class TorrentClient : ITorrentClient
 		parameters.AddIfHasValue("append_name", request.AppendName);
 
 		var httpResponse = await _httpClient.GetAsync($"{Endpoints.DownloadRequest}?{parameters}");
-		if (httpResponse == null)
-		{
-			return null;
-		}
+		httpResponse.EnsureSuccessStatusCode();
 
 		var buffer = await httpResponse.Content.ReadAsByteArrayAsync();
 		var text = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
@@ -110,10 +105,7 @@ public class TorrentClient : ITorrentClient
 		};
 
 		var httpResponse = await _httpClient.PostAsJsonAsync($"{Endpoints.ControlTorrent}", data);
-		if (httpResponse == null)
-		{
-			return null;
-		}
+		httpResponse.EnsureSuccessStatusCode();
 
 		var buffer = await httpResponse.Content.ReadAsByteArrayAsync();
 		var text = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
@@ -121,22 +113,56 @@ public class TorrentClient : ITorrentClient
 		return await httpResponse.Content.ReadFromJsonAsync<TorBoxResponse<ControlTorrentResponse?>>();
 	}
 
-	public async Task<TorBoxResponse<TorrentCheckCachedResponse?>> GetCheckCached(TorrentCheckCachedRequest request, CancellationToken cancellationToken)
+	public async Task<TorBoxResponse<TorrentCheckCachedListResponse?>> GetCheckCached(TorrentCheckCachedRequest request, CancellationToken cancellationToken)
 	{
-		var parameters = HttpUtility.ParseQueryString(string.Empty);
-		parameters.AddIfHasValue("hash", request.Hash);
-		parameters.AddIfHasValue("format", request.Format);
-		parameters.AddIfHasValue("list_files", request.ListFiles.ToString().ToLower());
+		var parameters = new Dictionary<string, string>
+	{
+		{ "hash", MagnetParser.ExtractHash(request.Hash) ?? string.Empty },
+		{ "format", request.Format.ToString().ToLowerInvariant() },
+		{ "list_files", request.ListFiles.ToString().ToLowerInvariant() }
+	};
 
-		var httpResponse = await _httpClient.GetAsync($"{Endpoints.CheckCached}?{parameters}");
-		if (httpResponse == null)
-		{
-			return null;
-		}
+		var requestUri = QueryHelpers.AddQueryString(Endpoints.CheckCached, parameters);
+
+		using var httpResponse = await _httpClient.GetAsync(requestUri, cancellationToken);
+		httpResponse.EnsureSuccessStatusCode();
 
 		var buffer = await httpResponse.Content.ReadAsByteArrayAsync();
 		var text = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
 
-		return await httpResponse.Content.ReadFromJsonAsync<TorBoxResponse<TorrentCheckCachedResponse?>>();
+		if (request.Format is Enums.Format.List)
+		{
+			return await httpResponse.Content.ReadFromJsonAsync<TorBoxResponse<TorrentCheckCachedListResponse?>>(cancellationToken);
+		}
+
+		// Default / Object format: reshape the dictionary-keyed response into a flat list
+		var result = await httpResponse.Content
+			.ReadFromJsonAsync<TorBoxResponse<TorrentCheckCachedObjectResponse>>(cancellationToken);
+
+		if (result is null)
+		{
+			return null;
+		}
+
+		var responseList = new TorBoxResponse<TorrentCheckCachedListResponse>
+		{
+			Success = result.Success,
+			Error = result.Error,
+			Detail = result.Detail,
+			Data = new()
+		};
+
+		foreach (var item in result.Data)
+		{
+			responseList.Data.Add(new TorrentCheckCachedItem
+			{
+				Name = item.Value?.Name,
+				Size = item.Value?.Size,
+				Hash = item.Value?.Hash,
+				Files = item.Value?.Files
+			});
+		}
+
+		return responseList;
 	}
 }

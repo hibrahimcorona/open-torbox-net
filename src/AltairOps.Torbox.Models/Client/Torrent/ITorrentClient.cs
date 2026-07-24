@@ -1,6 +1,7 @@
 ﻿using AltairOps.Torbox.Models.Requests.Torrents;
 using AltairOps.Torbox.Models.Responses;
 using AltairOps.Torbox.Models.Responses.Torrents;
+using System.Text.Json;
 
 namespace AltairOps.Torbox.Models.Client.Torrent;
 
@@ -51,5 +52,5 @@ public interface ITorrentClient
 	/// <param name="request"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public Task<TorBoxResponse<TorrentCheckCachedResponse?>> GetCheckCached(TorrentCheckCachedRequest request, CancellationToken cancellationToken);
+	public Task<TorBoxResponse<TorrentCheckCachedListResponse?>> GetCheckCached(TorrentCheckCachedRequest request, CancellationToken cancellationToken);
 }
