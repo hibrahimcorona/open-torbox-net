@@ -8,21 +8,21 @@ namespace AltairOps.Torbox.Models.Requests.Torrents;
 /// </summary>
 public class TorrentRequestDownloadRequest
 {
-    [JsonPropertyName("torrent_id")]
-    public long? TorrentId { get; set; }
+	[JsonPropertyName("torrent_id")]
+	public long? TorrentId { get; set; }
 
-    [JsonPropertyName("file_id")]
-    public string? FileId { get; set; }
+	[JsonPropertyName("file_id")]
+	public string? FileId { get; set; }
 
-    [JsonPropertyName("zip_link")]
-    public bool ZipLink { get; set; } = true;
+	[JsonPropertyName("zip_link")]
+	public bool ZipLink { get; set; } = true;
 
-    [JsonPropertyName("user_ip")]
-    public string? UserIp { get; set; }
+	[JsonPropertyName("user_ip")]
+	public string? UserIp { get; set; }
 
-    [JsonPropertyName("redirect")]
-    public bool? Redirect { get; set; }
+	[JsonPropertyName("redirect")]
+	public bool? Redirect { get; set; }
 
-    [JsonPropertyName("append_name")]
-    public bool? AppendName { get; set; }
+	[JsonPropertyName("append_name")]
+	public bool? AppendName { get; set; }
 }

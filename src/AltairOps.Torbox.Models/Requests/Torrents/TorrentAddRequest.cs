@@ -7,27 +7,27 @@ namespace AltairOps.Torbox.Models.Requests.Torrents;
 /// </summary>
 public class TorrentAddRequest
 {
-    [JsonPropertyName("file")]
-    public Byte[]? File { get; set; }
+	[JsonPropertyName("file")]
+	public Byte[]? File { get; set; }
 
-    [JsonPropertyName("magnet")]
-    public string? Magnet { get; set; }
+	[JsonPropertyName("magnet")]
+	public string? Magnet { get; set; }
 
-    [JsonPropertyName("seed")]
-    public int Seed { get; set; }
+	[JsonPropertyName("seed")]
+	public int Seed { get; set; }
 
-    [JsonPropertyName("allow_zip")]
-    public bool AllowZip { get; set; } = true;
+	[JsonPropertyName("allow_zip")]
+	public bool AllowZip { get; set; } = true;
 
-    [JsonPropertyName("name")]
-    public string? Name { get; set; }
+	[JsonPropertyName("name")]
+	public string? Name { get; set; }
 
-    [JsonPropertyName("as_queued")]
-    public bool? AsQueued { get; set; }
+	[JsonPropertyName("as_queued")]
+	public bool? AsQueued { get; set; }
 
-    [JsonPropertyName("add_only_if_cached")]
-    public bool? AddOnlyIfCached { get; set; }
+	[JsonPropertyName("add_only_if_cached")]
+	public bool? AddOnlyIfCached { get; set; }
 
-    [JsonIgnore]
-    public bool AddAsync { get; set; } = false;
+	[JsonIgnore]
+	public bool AddAsync { get; set; } = false;
 }

@@ -1,5 +1,5 @@
-﻿using System.Net.Http.Headers;
-using AltairOps.Torbox.Models.Client.Torrent;
+﻿using AltairOps.Torbox.Models.Client.Torrent;
+using System.Net.Http.Headers;
 
 namespace AltairOps.Torbox.Models.Client;
 

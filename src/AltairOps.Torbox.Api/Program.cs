@@ -1,4 +1,3 @@
-using AltairOps.Torbox.Models;
 using AltairOps.Torbox.Models.Client;
 using Scalar.AspNetCore;
 

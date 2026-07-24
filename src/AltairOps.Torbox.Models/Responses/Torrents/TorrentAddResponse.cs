@@ -7,12 +7,12 @@ namespace AltairOps.Torbox.Models.Responses.Torrents;
 /// </summary>
 public class TorrentAddResponse
 {
-    [JsonPropertyName("hash")]
-    public string? Hash { get; set; }
+	[JsonPropertyName("hash")]
+	public string? Hash { get; set; }
 
-    [JsonPropertyName("torrent_id")]
-    public long? TorrentId { get; set; }
+	[JsonPropertyName("torrent_id")]
+	public long? TorrentId { get; set; }
 
-    [JsonPropertyName("auth_id")]
-    public string? AuthId { get; set; }
+	[JsonPropertyName("auth_id")]
+	public string? AuthId { get; set; }
 }

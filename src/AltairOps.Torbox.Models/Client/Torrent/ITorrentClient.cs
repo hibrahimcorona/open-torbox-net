@@ -43,5 +43,5 @@ public interface ITorrentClient
 	/// <param name="request"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public Task<TorBoxResponse<ControlTorrentResponse?>> ControlTorrent (TorrentControlRequest request, CancellationToken cancellationToken = default);
+	public Task<TorBoxResponse<ControlTorrentResponse?>> ControlTorrent(TorrentControlRequest request, CancellationToken cancellationToken = default);
 }
