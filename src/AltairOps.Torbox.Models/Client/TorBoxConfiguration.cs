@@ -1,5 +1,4 @@
-﻿using AltairOps.Torbox.Models.Helpers;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace AltairOps.Torbox.Models.Client;
 

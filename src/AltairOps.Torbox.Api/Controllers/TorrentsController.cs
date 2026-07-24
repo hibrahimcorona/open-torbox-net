@@ -1,6 +1,6 @@
 ﻿using AltairOps.Torbox.Models.Client;
-using Microsoft.AspNetCore.Mvc;
 using AltairOps.Torbox.Models.Requests.Torrents;
+using Microsoft.AspNetCore.Mvc;
 
 namespace AltairOps.Torbox.Api.Controllers
 {
@@ -41,6 +41,13 @@ namespace AltairOps.Torbox.Api.Controllers
 		{
 			var controlResponse = await _torBoxClient.TorrentClient.ControlTorrent(request, cancellationToken);
 			return Ok(controlResponse);
+		}
+
+		[HttpGet("check-cached")]
+		public async Task<IActionResult> CheckCached([FromQuery] TorrentCheckCachedRequest request, CancellationToken cancellationToken = default)
+		{
+			var cachedResponse = await _torBoxClient.TorrentClient.CheckCached(request, cancellationToken);
+			return Ok(cachedResponse);
 		}
 	}
 }

@@ -1,6 +1,5 @@
 ﻿using AltairOps.Torbox.Models.Helpers;
 using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace AltairOps.Torbox.Models;
 
@@ -21,7 +20,7 @@ public class Setup
 
 	public static Secrets LoadSecrets(string path)
 	{
-		var fullPath =$"{path}/{_secretsFileName}";
+		var fullPath = $"{path}/{_secretsFileName}";
 		if (!File.Exists(fullPath))
 		{
 			throw new FileNotFoundException($"The secrets file '{_secretsFileName}' was not found.");

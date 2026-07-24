@@ -1,5 +1,4 @@
 ﻿using AltairOps.Torbox.Models.Constants;
-using AltairOps.Torbox.Models.Requests;
 using AltairOps.Torbox.Models.Requests.Torrents;
 using AltairOps.Torbox.Models.Responses;
 using AltairOps.Torbox.Models.Responses.Torrents;
@@ -101,9 +100,9 @@ public class TorrentClient : ITorrentClient
 		return await httpResponse.Content.ReadFromJsonAsync<TorBoxResponse<string>>();
 	}
 
-    public async Task<TorBoxResponse<ControlTorrentResponse?>> ControlTorrent(TorrentControlRequest request, CancellationToken cancellationToken)
-    {
-        var dataContent = new MultipartFormDataContent();
+	public async Task<TorBoxResponse<ControlTorrentResponse?>> ControlTorrent(TorrentControlRequest request, CancellationToken cancellationToken)
+	{
+		var dataContent = new MultipartFormDataContent();
 		dataContent.AddIfHasValue("torrent_id", request.TorrentId);
 		dataContent.AddIfHasValue("operation", request.ControlTorrentOperation);
 		dataContent.AddIfHasValue("all", request.All);
@@ -116,7 +115,7 @@ public class TorrentClient : ITorrentClient
 
 		var buffer = await httpResponse.Content.ReadAsByteArrayAsync();
 		var text = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
-		
+
 		return await httpResponse.Content.ReadFromJsonAsync<TorBoxResponse<ControlTorrentResponse?>>();
-    }
+	}
 }
