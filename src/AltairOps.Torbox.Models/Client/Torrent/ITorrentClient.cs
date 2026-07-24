@@ -15,7 +15,7 @@ public interface ITorrentClient
 	/// <param name="request"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public Task<TorBoxResponse<List<TorrentListResponse?>>> ListTorrents(TorrentListRequest request, CancellationToken cancellationToken = default);
+	public Task<TorBoxResponse<List<TorrentListResponse?>>> GetListTorrents(TorrentListRequest request, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// Adds a torrent to your TorBox account.
@@ -23,7 +23,7 @@ public interface ITorrentClient
 	/// <param name="request"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public Task<TorBoxResponse<TorrentAddResponse?>> AddTorrent(TorrentAddRequest request, CancellationToken cancellationToken = default);
+	public Task<TorBoxResponse<TorrentAddResponse?>> PostAddTorrent(TorrentAddRequest request, CancellationToken cancellationToken = default);
 
 	/// <summary>
 	/// Obtains a download link from TorBox.
@@ -36,12 +36,20 @@ public interface ITorrentClient
 	/// <summary>
 	/// Operation for control torrent. <br/>
 	/// There are 3 types of operations: <br/>
-	/// Reannounce reannounces the torrent to get new peers.
-	/// Delete deletes the torrent from the client and your account permanently
-	/// Resume resumes a paused torrent
+	/// Reannounce reannounces the torrent to get new peers. <br/>
+	/// Delete deletes the torrent from the client and your account permanently.<br/>
+	/// Resume resumes a paused torrent.<br/>
 	/// </summary>
 	/// <param name="request"></param>
 	/// <param name="cancellationToken"></param>
 	/// <returns></returns>
-	public Task<TorBoxResponse<ControlTorrentResponse?>> ControlTorrent(TorrentControlRequest request, CancellationToken cancellationToken = default);
+	public Task<TorBoxResponse<ControlTorrentResponse?>> PostControlTorrent(TorrentControlRequest request, CancellationToken cancellationToken = default);
+
+	/// <summary>
+	/// Checks if a torrent is cached in TorBox. <br/>
+	/// </summary>
+	/// <param name="request"></param>
+	/// <param name="cancellationToken"></param>
+	/// <returns></returns>
+	public Task<TorBoxResponse<TorrentCheckCachedResponse?>> GetCheckCached(TorrentCheckCachedRequest request, CancellationToken cancellationToken);
 }

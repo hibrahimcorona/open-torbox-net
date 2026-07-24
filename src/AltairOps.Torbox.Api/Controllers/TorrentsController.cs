@@ -18,14 +18,14 @@ namespace AltairOps.Torbox.Api.Controllers
 		[HttpGet("list")]
 		public async Task<IActionResult> ListTorrents([FromQuery] TorrentListRequest request, CancellationToken cancellationToken = default)
 		{
-			var torrentList = await _torBoxClient.TorrentClient.ListTorrents(request, cancellationToken);
+			var torrentList = await _torBoxClient.TorrentClient.GetListTorrents(request, cancellationToken);
 			return Ok(torrentList);
 		}
 
 		[HttpPost("add-torrent")]
 		public async Task<IActionResult> ListTorrents([FromQuery] TorrentAddRequest request, CancellationToken cancellationToken = default)
 		{
-			var torrentCreation = await _torBoxClient.TorrentClient.AddTorrent(request, cancellationToken);
+			var torrentCreation = await _torBoxClient.TorrentClient.PostAddTorrent(request, cancellationToken);
 			return Ok(torrentCreation);
 		}
 
@@ -39,14 +39,14 @@ namespace AltairOps.Torbox.Api.Controllers
 		[HttpPost("control-torrent")]
 		public async Task<IActionResult> ControlTorrent([FromQuery] TorrentControlRequest request, CancellationToken cancellationToken = default)
 		{
-			var controlResponse = await _torBoxClient.TorrentClient.ControlTorrent(request, cancellationToken);
+			var controlResponse = await _torBoxClient.TorrentClient.PostControlTorrent(request, cancellationToken);
 			return Ok(controlResponse);
 		}
 
 		[HttpGet("check-cached")]
 		public async Task<IActionResult> CheckCached([FromQuery] TorrentCheckCachedRequest request, CancellationToken cancellationToken = default)
 		{
-			var cachedResponse = await _torBoxClient.TorrentClient.CheckCached(request, cancellationToken);
+			var cachedResponse = await _torBoxClient.TorrentClient.GetCheckCached(request, cancellationToken);
 			return Ok(cachedResponse);
 		}
 	}

@@ -11,4 +11,6 @@ public class Endpoints
 	public static string DownloadRequest => "torrents/requestdl";
 
 	public static string ControlTorrent = "torrents/controltorrent";
+
+	public static string CheckCached = "torrents/checkcached";
 }

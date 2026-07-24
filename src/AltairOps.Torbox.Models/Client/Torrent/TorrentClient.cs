@@ -35,7 +35,7 @@ public class TorrentClient : ITorrentClient
 		_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _configuration.BearerToken);
 	}
 
-	public async Task<TorBoxResponse<List<TorrentListResponse?>>> ListTorrents(TorrentListRequest request, CancellationToken cancellationToken = default)
+	public async Task<TorBoxResponse<List<TorrentListResponse?>>> GetListTorrents(TorrentListRequest request, CancellationToken cancellationToken = default)
 	{
 		var parameters = HttpUtility.ParseQueryString(string.Empty);
 		parameters["bypass_cache"] = request.BypassCache.ToString().ToLower();
@@ -54,7 +54,7 @@ public class TorrentClient : ITorrentClient
 		return await httpResponse.Content.ReadFromJsonAsync<TorBoxResponse<List<TorrentListResponse?>>>();
 	}
 
-	public async Task<TorBoxResponse<TorrentAddResponse?>> AddTorrent(TorrentAddRequest request, CancellationToken cancellationToken = default)
+	public async Task<TorBoxResponse<TorrentAddResponse?>> PostAddTorrent(TorrentAddRequest request, CancellationToken cancellationToken = default)
 	{
 		var dataContent = new MultipartFormDataContent();
 		dataContent.AddIfHasValue("file", request.File);
@@ -100,14 +100,16 @@ public class TorrentClient : ITorrentClient
 		return await httpResponse.Content.ReadFromJsonAsync<TorBoxResponse<string>>();
 	}
 
-	public async Task<TorBoxResponse<ControlTorrentResponse?>> ControlTorrent(TorrentControlRequest request, CancellationToken cancellationToken)
+	public async Task<TorBoxResponse<ControlTorrentResponse?>> PostControlTorrent(TorrentControlRequest request, CancellationToken cancellationToken)
 	{
-		var dataContent = new MultipartFormDataContent();
-		dataContent.AddIfHasValue("torrent_id", request.TorrentId);
-		dataContent.AddIfHasValue("operation", request.ControlTorrentOperation);
-		dataContent.AddIfHasValue("all", request.All);
+		var data = new Dictionary<string, string>
+		{
+			{ "torrent_id", request.TorrentId?.ToString() ?? string.Empty },
+			{ "operation", request.ControlTorrentOperation.ToString().ToLowerInvariant() },
+			{ "all", request.All.ToString().ToLower() }
+		};
 
-		var httpResponse = await _httpClient.PostAsync($"{Endpoints.ControlTorrent}", dataContent);
+		var httpResponse = await _httpClient.PostAsJsonAsync($"{Endpoints.ControlTorrent}", data);
 		if (httpResponse == null)
 		{
 			return null;
@@ -117,5 +119,24 @@ public class TorrentClient : ITorrentClient
 		var text = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
 
 		return await httpResponse.Content.ReadFromJsonAsync<TorBoxResponse<ControlTorrentResponse?>>();
+	}
+
+	public async Task<TorBoxResponse<TorrentCheckCachedResponse?>> GetCheckCached(TorrentCheckCachedRequest request, CancellationToken cancellationToken)
+	{
+		var parameters = HttpUtility.ParseQueryString(string.Empty);
+		parameters.AddIfHasValue("hash", request.Hash);
+		parameters.AddIfHasValue("format", request.Format);
+		parameters.AddIfHasValue("list_files", request.ListFiles.ToString().ToLower());
+
+		var httpResponse = await _httpClient.GetAsync($"{Endpoints.CheckCached}?{parameters}");
+		if (httpResponse == null)
+		{
+			return null;
+		}
+
+		var buffer = await httpResponse.Content.ReadAsByteArrayAsync();
+		var text = Encoding.UTF8.GetString(buffer, 0, buffer.Length);
+
+		return await httpResponse.Content.ReadFromJsonAsync<TorBoxResponse<TorrentCheckCachedResponse?>>();
 	}
 }
